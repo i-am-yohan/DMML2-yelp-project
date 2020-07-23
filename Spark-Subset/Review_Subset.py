@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
     in_csv_file2 = in_csv_file1.split('/')
     in_id_file2 = in_id_file1.split('/')
-
+    
     in_csv_file3 = in_csv_file2[len(in_csv_file2) - 1]
     in_id_file3 = in_id_file2[len(in_id_file2) - 1]
 
@@ -34,6 +34,9 @@ if __name__ == '__main__':
     sc = SparkContext(conf = conf)
 
     sqlContext = SQLContext(sc)
+    
+    print(in_csv_file3)
+    print(in_id_file3)
 
     In_review = sqlContext.read.csv("/Temp/{}".format(in_csv_file3) , header=True, inferSchema=True)
     In_Subset = sqlContext.read.csv("/Temp/{}".format(in_id_file3) , header=False, inferSchema=True)

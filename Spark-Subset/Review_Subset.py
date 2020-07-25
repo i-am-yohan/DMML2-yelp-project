@@ -53,5 +53,4 @@ if __name__ == '__main__':
 
     Out_DF.coalesce(1).write.mode('overwrite').csv('/Temp/Output' , header=True, escape="",quote="")
     
-    sqlContext.stop()
     sc.stop()

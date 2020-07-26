@@ -51,6 +51,6 @@ if __name__ == '__main__':
     #sqlContext.sql("""select count(*) from Out_DF""").show()
     #sqlContext.sql("""select count(*) from In_review""").show()
 
-    Out_DF.coalesce(1).write.mode('overwrite').csv('/Temp/Output' , header=True , quote = "", escape="")
+    Out_DF.coalesce(1).write.mode('overwrite').csv('/Temp/Output' , header=True , quote = "", escape="", encoding = "ISO-8859-1")
     
     sc.stop()

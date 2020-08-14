@@ -48,9 +48,9 @@ test = In_Reviews_ABT[~In_Reviews_ABT.index.isin(train.index)]
 
 
 # I'm using GLoVe word vectors to get pretrained word embeddings
-embed_size = 200
-max_features = 20000
-maxlen = 200
+embed_size = 100
+max_features = 10000
+maxlen = 100
 
 
 # read in embeddings
@@ -89,12 +89,13 @@ for word, i in word_index.items():
 inp = Input(shape = (maxlen,))
 x = Embedding(max_features, embed_size, weights = [embedding_matrix], trainable = True)(inp)
 x = SpatialDropout1D(0.5)(x)
-x = Bidirectional(LSTM(40, return_sequences=True))(x)
-x = Bidirectional(GRU(40, return_sequences=True))(x)
+#x = Conv1D(128, 5)(x)
+x = Bidirectional(LSTM(128, return_sequences=True, dropout=0.2))(x)
+x = Bidirectional(GRU(128, return_sequences=True, dropout=0.2))(x)
 avg_pool = GlobalAveragePooling1D()(x)
-max_pool = GlobalMaxPooling1D()(x)
-conc = concatenate([avg_pool, max_pool])
-outp = Dense(5, activation = 'sigmoid')(conc)
+#max_pool = GlobalMaxPooling1D()(x)
+#conc = concatenate([avg_pool, max_pool])
+outp = Dense(5, activation = 'sigmoid')(avg_pool)
 
 
 model = Model(inputs = inp, outputs = outp)
